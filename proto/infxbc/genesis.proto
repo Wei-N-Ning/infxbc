@@ -1,0 +1,12 @@
+syntax = "proto3";
+package infx.infxbc.infxbc;
+
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/infx/infxbc/x/infxbc/types";
+
+// GenesisState defines the infxbc module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}

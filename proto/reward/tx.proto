@@ -1,0 +1,42 @@
+syntax = "proto3";
+package infx.infxbc.reward;
+
+// this line is used by starport scaffolding # proto/tx/import
+import "reward/rewardV01.proto";
+
+option go_package = "github.com/infx/infxbc/x/reward/types";
+
+// Msg defines the Msg service.
+service Msg {
+    // this line is used by starport scaffolding # proto/tx/rpc
+  rpc CreateRewardV01(MsgCreateRewardV01) returns (MsgCreateRewardV01Response);
+  rpc UpdateRewardV01(MsgUpdateRewardV01) returns (MsgUpdateRewardV01Response);
+  rpc DeleteRewardV01(MsgDeleteRewardV01) returns (MsgDeleteRewardV01Response);
+}
+
+// this line is used by starport scaffolding # proto/tx/message
+message MsgCreateRewardV01 {
+  string creator = 1;
+  string userId = 2;
+  string amount = 3;
+}
+
+message MsgCreateRewardV01Response {
+  uint64 id = 1;
+}
+
+message MsgUpdateRewardV01 {
+  string creator = 1;
+  uint64 id = 2;
+  string userId = 3;
+  string amount = 4;
+}
+
+message MsgUpdateRewardV01Response { }
+
+message MsgDeleteRewardV01 {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteRewardV01Response { }

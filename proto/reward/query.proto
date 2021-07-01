@@ -1,0 +1,57 @@
+syntax = "proto3";
+package infx.infxbc.reward;
+
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+// this line is used by starport scaffolding # 1
+import "reward/rewardV01.proto";
+
+option go_package = "github.com/infx/infxbc/x/reward/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    // this line is used by starport scaffolding # 2
+
+	// Queries a list of getReward items.
+	rpc GetReward(QueryGetRewardRequest) returns (QueryGetRewardResponse) {
+		option (google.api.http).get = "/infx/infxbc/reward/getReward";
+	}
+
+
+	// Queries a rewardV01 by id.
+	rpc RewardV01(QueryGetRewardV01Request) returns (QueryGetRewardV01Response) {
+		option (google.api.http).get = "/infx/infxbc/reward/rewardV01/{id}";
+	}
+
+	// Queries a list of rewardV01 items.
+	rpc RewardV01All(QueryAllRewardV01Request) returns (QueryAllRewardV01Response) {
+		option (google.api.http).get = "/infx/infxbc/reward/rewardV01";
+	}
+
+}
+
+// this line is used by starport scaffolding # 3
+message QueryGetRewardRequest {
+  string userId = 1;
+}
+
+message QueryGetRewardResponse {
+  RewardV01 reward = 1;
+}
+
+message QueryGetRewardV01Request {
+	uint64 id = 1;
+}
+
+message QueryGetRewardV01Response {
+	RewardV01 RewardV01 = 1;
+}
+
+message QueryAllRewardV01Request {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllRewardV01Response {
+	repeated RewardV01 RewardV01 = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

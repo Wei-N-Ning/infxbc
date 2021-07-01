@@ -24,3 +24,8 @@ const (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	UserV01Key      = "UserV01-value-"
+	UserV01CountKey = "UserV01-count-"
+)

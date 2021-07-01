@@ -1,0 +1,13 @@
+syntax = "proto3";
+package infx.infxbc.reward;
+
+option go_package = "github.com/infx/infxbc/x/reward/types";
+
+import "gogoproto/gogo.proto";
+
+message RewardV01 {
+  string creator = 1;
+  uint64 id = 2;
+  string userId = 3; 
+  string amount = 4; 
+}

@@ -2,12 +2,41 @@ syntax = "proto3";
 package infx.infxbc.infxbc;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "infxbc/userV01.proto";
 
 option go_package = "github.com/infx/infxbc/x/infxbc/types";
 
 // Msg defines the Msg service.
 service Msg {
     // this line is used by starport scaffolding # proto/tx/rpc
+  rpc CreateUserV01(MsgCreateUserV01) returns (MsgCreateUserV01Response);
+  rpc UpdateUserV01(MsgUpdateUserV01) returns (MsgUpdateUserV01Response);
+  rpc DeleteUserV01(MsgDeleteUserV01) returns (MsgDeleteUserV01Response);
 }
 
 // this line is used by starport scaffolding # proto/tx/message
+message MsgCreateUserV01 {
+  string creator = 1;
+  string name = 2;
+  string role = 3;
+}
+
+message MsgCreateUserV01Response {
+  uint64 id = 1;
+}
+
+message MsgUpdateUserV01 {
+  string creator = 1;
+  uint64 id = 2;
+  string name = 3;
+  string role = 4;
+}
+
+message MsgUpdateUserV01Response { }
+
+message MsgDeleteUserV01 {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteUserV01Response { }

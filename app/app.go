@@ -88,6 +88,9 @@ import (
 	"github.com/infx/infxbc/x/infxbc"
 	infxbckeeper "github.com/infx/infxbc/x/infxbc/keeper"
 	infxbctypes "github.com/infx/infxbc/x/infxbc/types"
+	"github.com/infx/infxbc/x/reward"
+	rewardkeeper "github.com/infx/infxbc/x/reward/keeper"
+	rewardtypes "github.com/infx/infxbc/x/reward/types"
 )
 
 const Name = "infxbc"
@@ -134,6 +137,7 @@ var (
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
+		reward.AppModuleBasic{},
 		infxbc.AppModuleBasic{},
 	)
 
@@ -202,6 +206,8 @@ type App struct {
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
+	RewardKeeper rewardkeeper.Keeper
+
 	InfxbcKeeper infxbckeeper.Keeper
 
 	// the module manager
@@ -232,6 +238,7 @@ func New(
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
+		rewardtypes.StoreKey,
 		infxbctypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -325,6 +332,13 @@ func New(
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
+	app.RewardKeeper = *rewardkeeper.NewKeeper(
+		appCodec,
+		keys[rewardtypes.StoreKey],
+		keys[rewardtypes.MemStoreKey],
+	)
+	rewardModule := reward.NewAppModule(appCodec, app.RewardKeeper)
+
 	app.InfxbcKeeper = *infxbckeeper.NewKeeper(
 		appCodec,
 		keys[infxbctypes.StoreKey],
@@ -373,6 +387,7 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
+		rewardModule,
 		infxbcModule,
 	)
 
@@ -407,6 +422,7 @@ func New(
 		evidencetypes.ModuleName,
 		ibctransfertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
+		rewardtypes.ModuleName,
 		infxbctypes.ModuleName,
 	)
 
@@ -595,6 +611,7 @@ func initParamsKeeper(appCodec codec.BinaryMarshaler, legacyAmino *codec.LegacyA
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
+	paramsKeeper.Subspace(rewardtypes.ModuleName)
 	paramsKeeper.Subspace(infxbctypes.ModuleName)
 
 	return paramsKeeper

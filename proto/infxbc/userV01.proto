@@ -1,0 +1,13 @@
+syntax = "proto3";
+package infx.infxbc.infxbc;
+
+option go_package = "github.com/infx/infxbc/x/infxbc/types";
+
+import "gogoproto/gogo.proto";
+
+message UserV01 {
+  string creator = 1;
+  uint64 id = 2;
+  string name = 3; 
+  string role = 4; 
+}

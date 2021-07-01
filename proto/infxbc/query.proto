@@ -4,12 +4,40 @@ package infx.infxbc.infxbc;
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 // this line is used by starport scaffolding # 1
+import "infxbc/userV01.proto";
 
 option go_package = "github.com/infx/infxbc/x/infxbc/types";
 
 // Query defines the gRPC querier service.
 service Query {
     // this line is used by starport scaffolding # 2
+
+	// Queries a userV01 by id.
+	rpc UserV01(QueryGetUserV01Request) returns (QueryGetUserV01Response) {
+		option (google.api.http).get = "/infx/infxbc/infxbc/userV01/{id}";
+	}
+
+	// Queries a list of userV01 items.
+	rpc UserV01All(QueryAllUserV01Request) returns (QueryAllUserV01Response) {
+		option (google.api.http).get = "/infx/infxbc/infxbc/userV01";
+	}
+
 }
 
 // this line is used by starport scaffolding # 3
+message QueryGetUserV01Request {
+	uint64 id = 1;
+}
+
+message QueryGetUserV01Response {
+	UserV01 UserV01 = 1;
+}
+
+message QueryAllUserV01Request {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllUserV01Response {
+	repeated UserV01 UserV01 = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
